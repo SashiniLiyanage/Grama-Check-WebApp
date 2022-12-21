@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import PersonIcon from '@mui/icons-material/Person';
 import Divider from '@mui/material/Divider';
+import MenuBar from '../Components/MenuBar'
 
 import image from '../Assets/upanna.jpg';
 import logo from '../Assets/logo.png';
@@ -22,11 +23,14 @@ const Root = styled('div')(({ theme }) => ({
     },
   }));
 
+
+
 const LoginPage = props => {
 
     const { signIn } = useAuthContext();
 
     return (
+    <div className="App">
     <div className='Background'>
     <Card sx={{ display: 'flex', width: "75%"}}>
         <CardMedia
@@ -57,6 +61,7 @@ const LoginPage = props => {
             </Box>
         </Box>
     </Card>
+    </div>
     </div>
     );
 };
