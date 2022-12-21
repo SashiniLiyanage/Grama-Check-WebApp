@@ -1,3 +1,8 @@
+
+html * {
+  font-family: 'Montserrat' !important;
+}
+
 :root{
   --PrimaryColour :  rgb(120,104,230);
   --SecondaryColour :  rgb(237,238,247);

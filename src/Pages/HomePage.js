@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthContext } from "@asgardeo/auth-react";
 import UserHome from './UserHome';
 import GramaSewakaPortal from './GramaSewakaPortal';
+import MenuBar from '../Components/MenuBar'
 
 const HomePage = props => {
 
@@ -29,7 +30,11 @@ const HomePage = props => {
       
     return (
         loading?(<div className="App"><div className='fullscreen'><div className="lds-ring"><div></div><div></div><div></div><div></div></div></div></div>):(
-        group?(<GramaSewakaPortal/>):(<UserHome/>))
+        <>
+            <MenuBar />
+            {!group?(<GramaSewakaPortal/>):(<UserHome/>)}
+        </>
+        )
     );
 };
 
