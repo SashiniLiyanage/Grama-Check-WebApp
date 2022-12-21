@@ -4,16 +4,15 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {useAuthContext } from "@asgardeo/auth-react";
 import { useHistory } from "react-router-dom";
 
 export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { state, signOut } = useAuthContext();
+  const { state, signOut, getBasicUserInfo } = useAuthContext();
   const history = useHistory();
 
   const handleMenu = (event) => {
@@ -37,7 +36,7 @@ export default function MenuAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            Grama Check
           </Typography>
           {state.isAuthenticated && (
             <div>
@@ -49,7 +48,8 @@ export default function MenuAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <Typography> {state.username}</Typography>
+                <Avatar alt={state.username} src="/static/images/avatar/2.jpg" />
               </IconButton>
               <Menu
                 id="menu-appbar"

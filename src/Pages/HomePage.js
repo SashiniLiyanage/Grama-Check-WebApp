@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthContext } from "@asgardeo/auth-react";
-import MenuBar from '../Components/MenuBar';
 import UserHome from './UserHome';
 import GramaSewakaPortal from './GramaSewakaPortal';
 
@@ -17,9 +16,10 @@ const HomePage = props => {
             const idToken = await getIDToken();
             const decodedIDToken = await getDecodedIDToken();
 
+            setLoading(false);
+
             if(basicUserInfo.groups){
-                setLoading(false);
-                setGroup(true);
+                setGroup(true)
             }
         })();
 
@@ -28,10 +28,8 @@ const HomePage = props => {
 
       
     return (
-        <>
-        <MenuBar/>
-        </>
-        
+        loading?(<div className="App"><div className='fullscreen'><div className="lds-ring"><div></div><div></div><div></div><div></div></div></div></div>):(
+        group?(<GramaSewakaPortal/>):(<UserHome/>))
     );
 };
 

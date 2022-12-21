@@ -7,10 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import PersonIcon from '@mui/icons-material/Person';
-import Divider from '@mui/material/Divider';
-import MenuBar from '../Components/MenuBar'
+import { useHistory } from "react-router-dom";
 
 import image from '../Assets/upanna.jpg';
 import logo from '../Assets/logo.png';
@@ -27,12 +25,21 @@ const Root = styled('div')(({ theme }) => ({
 
 const LoginPage = props => {
 
-    const { signIn } = useAuthContext();
+    const { state, signIn } = useAuthContext();
+    const history = useHistory();
+
+    const handleSignIn = ()=>{
+        if(state.isAuthenticated){
+            history.push("/home");
+        }else{
+            signIn();
+        }  
+    }
 
     return (
     <div className="App">
     <div className='Background'>
-    <Card sx={{ display: 'flex', width: "75%"}}>
+    <Card sx={{ display: 'flex', width: "75%", maxHeight: "90%"}}>
         <CardMedia
             component="img"
             sx={{ width: "40%"}}
@@ -49,15 +56,11 @@ const LoginPage = props => {
             </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-            <Root>
-                <Button variant="contained" endIcon={<PictureAsPdfIcon/>}  onClick={() => signIn()}>
-                    Get Certificate
+                <Root>
+                <Button variant="contained" endIcon={<PersonIcon/>}  onClick={handleSignIn}>
+                    Login
                 </Button>
-                <Divider>OR</Divider>
-                <Button variant="contained" endIcon={<PersonIcon/>}  onClick={() => signIn()}>
-                    Login as Gramasewaka
-                </Button>
-            </Root>
+                </Root>              
             </Box>
         </Box>
     </Card>
