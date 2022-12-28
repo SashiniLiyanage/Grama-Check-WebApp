@@ -19,8 +19,12 @@ const theme = createTheme({
       main: '#7868E6',
     },
     secondary: {
-      main: '#11cb5f',
+      main: '#EDEEF7',
     },
+    warning: {
+      main: '#F18F01',
+      contrastText: '#ffffff',
+    }
   },
 });
 

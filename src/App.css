@@ -124,3 +124,8 @@ a {
     opacity: 0;
   }
 }
+
+.HomeBG {
+  background-color: var(--SecondaryColour);
+  height: 91vh ;
+}

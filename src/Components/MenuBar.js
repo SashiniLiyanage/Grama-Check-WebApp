@@ -158,16 +158,18 @@ function MenuBar({group, info}) {
 
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
           
-          <IconButton
+          <Button
             onClick={handleOpenUserMenu}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{ ml: 2, borderRadius: 5 }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
+            color="inherit"
           >
+            <Typography sx={{ m: 1, textTransform: 'none' }}> {info.displayName}</Typography>
             <Avatar sx={{ width: 32, height: 32 }} alt={info.username} src="/static/images/avatar/2.jpg" />
-          </IconButton>
+          </Button>
       </Box>
       <Menu
         anchorEl={anchorElUser}
@@ -204,7 +206,7 @@ function MenuBar({group, info}) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-              
+ 
         <MenuItem>
           <Typography textAlign="center" onClick={GoToProfile}>Profile</Typography>
         </MenuItem>
