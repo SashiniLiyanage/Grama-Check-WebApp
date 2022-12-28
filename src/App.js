@@ -1,24 +1,26 @@
-import React, {useEffect} from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { SecureRoute, useAuthContext } from "@asgardeo/auth-react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/LoginPage";
 import NotFoundPage from "./Pages/NotFoundPage";
-import ProtectedRoute from "./Components/ProtectedRoute";
-
-import './App.css'; 
-
+import Spinner from "./Components/Spinner";
+import './App.css';
+import DefaultLayout from "./Components/DefaultLayout";
+import GramaHomePage from "./Pages/GramaHomePage";
 
 function App() {
-  const { signIn } = useAuthContext();
+
+    const {signIn} = useAuthContext();
 
     return (
         <Router>
+            <React.Suspense fallback={Spinner}>
             <Switch>
-                <Route exact path="/" component={ LoginPage } />
-                <ProtectedRoute exact path="/home" component={ HomePage } />
-                <Route component={NotFoundPage} />
+                <Route exact path="/login" name="Login Page" component={LoginPage} />
+                <SecureRoute exact path="/" component={DefaultLayout} callback={signIn}/>
+                <Route exact path="/*" name="not found" component={NotFoundPage}/>
             </Switch>
+            </React.Suspense>
         </Router>
     )
 }

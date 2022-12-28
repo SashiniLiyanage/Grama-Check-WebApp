@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserHome = props => {
+const UserHomePage = props => {
     return (
         <div>
             user
@@ -8,4 +8,4 @@ const UserHome = props => {
     );
 };
 
-export default UserHome;
+export default UserHomePage;

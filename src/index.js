@@ -6,8 +6,8 @@ import { AuthProvider } from "@asgardeo/auth-react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const config = {
-  signInRedirectURL: "https://localhost:3000/home",
-  signOutRedirectURL: "https://localhost:3000",
+  signInRedirectURL: "https://localhost:3000",
+  signOutRedirectURL: "https://localhost:3000/login",
   clientID: "BSkuHRd08YqAFxKKmTr_fRh99Tka",
   baseUrl: "https://api.asgardeo.io/t/gramacheckauth",
   scope: ["openid" , "groups", " phone", "profile"]

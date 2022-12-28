@@ -30,7 +30,7 @@ const LoginPage = props => {
 
     const handleSignIn = ()=>{
         if(state.isAuthenticated){
-            history.push("/home");
+            history.push("/");
         }else{
             signIn();
         }  
@@ -42,10 +42,10 @@ const LoginPage = props => {
     <Card sx={{ display: 'flex', width: "75%", maxHeight: "90%"}}>
         <CardMedia
             component="img"
-            sx={{ width: "40%"}}
+            sx={{ width: "40%", display: { xs: 'none', md: 'flex' }}}
             image={image}
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column',width: "60%" }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column',width: { xs: '100%', md: '60%' }}}>
             <CardContent sx={{ flex: '1 0 auto' }}>
             <img src={logo} alt="horse" style={{width: "120px"}}/>
             <Typography component="div" variant="h5">
