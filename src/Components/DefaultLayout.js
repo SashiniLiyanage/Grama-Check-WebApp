@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 
 import MenuBar from "./MenuBar";
-import PreviewPage from "../Pages/PreviewPage";
 import DataBasePage from "../Pages/DataBasePage";
 import GramaHomePage from "../Pages/GramaHomePage";
 import UserHomePage from "../Pages/UserHomePage";

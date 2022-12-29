@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useAuthContext } from "@asgardeo/auth-react";
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function MenuBar({group, info}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
