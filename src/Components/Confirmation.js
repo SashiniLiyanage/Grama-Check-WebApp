@@ -1,8 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import React, {useRef, useState} from 'react';
 import SignaturePad from 'react-signature-canvas'
-import { Button, TextField, IconButton, Snackbar } from '@mui/material';
+import { Button, TextField, IconButton, Snackbar,Paper, Typography} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';

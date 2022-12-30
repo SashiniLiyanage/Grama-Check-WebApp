@@ -2,19 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-import Checkbox from '@mui/material/Checkbox';
+import {Toolbar,Typography,Paper,Checkbox} from '@mui/material';
+import {Table, TableHead,TableBody,TableCell,TableContainer,TablePagination,TableRow,TableSortLabel} from '@mui/material';
 import FormatLineSpacingSharpIcon from '@mui/icons-material/FormatLineSpacingSharp';
 
 function createData(Date, Name, NIC, Address, Sex) {

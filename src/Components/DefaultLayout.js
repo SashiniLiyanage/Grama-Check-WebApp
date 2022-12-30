@@ -1,13 +1,7 @@
 import React from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
 import { useEffect, useState } from "react";
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
+import {HashRouter as Router,Switch,Route,Redirect} from "react-router-dom";
 
 import MenuBar from "./MenuBar";
 import DataBasePage from "../Pages/DataBasePage";

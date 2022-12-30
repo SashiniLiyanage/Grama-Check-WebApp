@@ -1,16 +1,10 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Paper from '@mui/material/Paper';
+import {DialogActions,DialogContent, DialogTitle, Paper, Box, Fab, Tooltip} from '@mui/material';
 import Draggable from 'react-draggable';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
 import DescriptionSharpIcon from '@mui/icons-material/DescriptionSharp';
 import BadgeSharpIcon from '@mui/icons-material/BadgeSharp';
-import { Tooltip } from '@mui/material';
 import birthcertificate from '../Assets/birthcertificate.pdf'
 import id from '../Assets/id.pdf'
 import AllPages from './AllPages';
