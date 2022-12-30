@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -13,29 +13,37 @@ import { useHistory } from 'react-router-dom';
 const steps = ['Select Request', 'Review Request', 'Confirm'];
 
 export default function LinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [selected, setSelected] = React.useState([{}]);
-  const [confirmed, setConfirmed] = React.useState(false);
-
-
+  const [activeStep, setActiveStep] = useState(0);
+  const [selected, setSelected] = useState([{}]);
+  const [confirmed, setConfirmed] = useState(false);
+  const [reviewed, setReviewed] = useState(false);
+  const [reject, setReject] = useState({"status":false, "msg":""});
+  const history = useHistory()
+  
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setReviewed(false)
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setReviewed(false)
+    setConfirmed(false)
   };
 
   const handleReset = () => {
-    setActiveStep(0);
+    // setActiveStep(0);
+    // setReviewed(false)
+    // setConfirmed(false)
+    history.push("/")
   };
 
-  const ValidNext =(param)=>{
+  const disableNext =(param)=>{
     switch(param){
       case 1:
         return JSON.stringify(selected[0])==='{}'
       case 2:
-        return false
+        return !reviewed
       case 3:
         return !confirmed
       default:
@@ -48,9 +56,9 @@ export default function LinearStepper() {
       case 1:
         return <EnhancedTable selected={selected} setSelected={setSelected}/>;
       case 2:
-        return <Review request={selected[0]}/>;
+        return <Review request={selected[0]} setReviewed={setReviewed}/>;
       case 3:
-        return <Confirmation setConfirmed={setConfirmed}/>;
+        return <Confirmation setConfirmed={setConfirmed} reject={reject} setReject={setReject} />;
       default:
         return <div>Error: Please reload the page</div>;
     }
@@ -72,10 +80,22 @@ export default function LinearStepper() {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            Request is Approved
+          {reject.status?
+          <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1, color:"red"}}>
+            The Gramasewaka Certificate is Rejected!
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Typography sx={{ mt: 2, mb: 1}}>
+            Reason: {reject.msg} 
+          </Typography>
+          </React.Fragment>
+          :
+          <Typography sx={{ mt: 2, mb: 1, color:"green" }}>
+            The Gramasewaka Certificate is Approved!
+          </Typography>
+          }
+          
+          <Box sx={{ pt: 5 }}>
             <Box sx={{ flex: '1 1 auto' }} />
             <Button onClick={handleReset}>Go Back To Requests</Button>
           </Box>
@@ -97,7 +117,7 @@ export default function LinearStepper() {
             <Button 
             variant="contained"
             onClick={handleNext}
-            disabled={ValidNext(activeStep + 1)}
+            disabled={disableNext(activeStep + 1)}
             >
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>

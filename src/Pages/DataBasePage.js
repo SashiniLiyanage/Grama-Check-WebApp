@@ -24,7 +24,7 @@ const DataBasePage = props => {
 
     return (
         <>
-         <Paper sx={{m: 3, p:3, backgroundColor:"#fafafa"}}>
+         <Paper sx={{m: 3, p:3}}>
             <Typography
                 sx={{ flex: '1 1 100%' }}
                 variant="h6"
@@ -52,11 +52,11 @@ const DataBasePage = props => {
 
             </Box>
             </Box>
-            <Button variant="contained" startIcon={<PersonSearchIcon/>}>
+            <Button sx={{m: 3}}  variant="contained" startIcon={<PersonSearchIcon/>}>
                 View
             </Button>
         </Paper>
-        <Paper sx={{m: 3, p:3, backgroundColor:"#fafafa"}}>
+        <Paper sx={{m: 3, p:3}}>
             <Typography
                 sx={{ flex: '1 1 100%' }}
                 variant="h6"
@@ -98,11 +98,11 @@ const DataBasePage = props => {
 
             </Box>
             </Box>
-            <Button variant="contained" startIcon={<AddCircleOutlineIcon />}>
+            <Button sx={{m: 3}} variant="contained" startIcon={<AddCircleOutlineIcon />}>
                 Update
             </Button>
         </Paper>
-        <Paper sx={{m: 3, p:3, backgroundColor:"#fafafa"}}>
+        <Paper sx={{m: 3, p:3}}>
             <Typography
                 sx={{ flex: '1 1 100%' }}
                 variant="h6"
@@ -130,7 +130,7 @@ const DataBasePage = props => {
 
             </Box>
             </Box>
-            <Button variant="contained" color='error' onClick={handleClickOpen} startIcon={<DeleteIcon />}>
+            <Button sx={{m: 3}} variant="contained" color='error' onClick={handleClickOpen} startIcon={<DeleteIcon />}>
                 Delete
             </Button>
             <Dialog
@@ -155,6 +155,7 @@ const DataBasePage = props => {
                 </DialogActions>
             </Dialog>
         </Paper>
+        <br/>
         </>
         
     );

@@ -10,7 +10,7 @@ const config = {
   signOutRedirectURL: "https://localhost:3000/login",
   clientID: "BSkuHRd08YqAFxKKmTr_fRh99Tka",
   baseUrl: "https://api.asgardeo.io/t/gramacheckauth",
-  scope: ["openid" , "groups", " phone", "profile"]
+  scope: ["openid" , "groups", "email", " phone", "profile"]
 };
 
 const theme = createTheme({

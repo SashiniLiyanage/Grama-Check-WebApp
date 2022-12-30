@@ -6,7 +6,6 @@ import NotFoundPage from "./Pages/NotFoundPage";
 import Spinner from "./Components/Spinner";
 import './App.css';
 import DefaultLayout from "./Components/DefaultLayout";
-import GramaHomePage from "./Pages/GramaHomePage";
 
 function App() {
 

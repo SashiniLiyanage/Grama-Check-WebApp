@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
@@ -96,9 +95,9 @@ export default function DraggableDialog() {
           Identity Card
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <AllPages pdf={birthcertificate}/>
-          </DialogContentText>
+          
+            <AllPages pdf={id}/>
+          
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCloseIdentity}>
@@ -118,9 +117,9 @@ export default function DraggableDialog() {
           Birth Certificate
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <AllPages pdf={id}/>
-          </DialogContentText>
+         
+            <AllPages pdf={birthcertificate}/>
+        
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCloseCertificate}>

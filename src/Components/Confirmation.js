@@ -2,24 +2,61 @@ import React, {useEffect, useRef, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import SignaturePad from 'react-signature-canvas'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, IconButton, Snackbar } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import MuiAlert from '@mui/material/Alert';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const details = {"name":"fullname", "address":"No: 23/A, First Lane, Maharagama", "gramadiv": 1234, "gramaName": "garma name"}
 
-const Confirmation = ({setConfirmed}) => {
+const Confirmation = ({reject, setReject, setConfirmed}) => {
     const signCanvas = useRef({})
     const [image, setImage] = useState(null);
-    const [reject, setReject] = useState(false);
+    const [open, setOpen] = useState(false);
+    const noteRef = useRef()
 
-    const handleApprove = ()=>{
-        setReject(false)
+    const handleClickapprove = ()=>{
+        setReject({"status":false, "msg": noteRef.current.value})
         setConfirmed(true)
+        setOpen(true)
     }
 
-    const handleReject = ()=>{
-        setReject(true)
-        setConfirmed(true)
-    }
+    const handleClickreject = () => {
+        setReject({"status":true, "msg": noteRef.current.value})
+
+        if(noteRef.current.value !==""){
+            setConfirmed(true)
+            setOpen(true)
+        }else{
+            setConfirmed(false)
+        }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpen(false);
+    };
+
+    const action = (
+        <React.Fragment>
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+        </React.Fragment>
+    );
 
     const clear = () =>{
         signCanvas.current.clear();
@@ -47,31 +84,56 @@ const Confirmation = ({setConfirmed}) => {
             <p>Serial No of Registration at G/S office</p>
             <hr/>
 
-            <p>I certify that Mr/Mrs/Ms (Full Name) <u>{details.name}</u> is residing at (address) <u>{details.address}</u> for <u>5</u> years.</p>
+            <p>I certify that Mr/Mrs/Ms (Full Name) <span className='uderline'>{details.name}</span> is residing at (address) <span className='uderline'>{details.address}</span> for <span className='uderline'></span> years.</p>
             <p>I also certify that he/she is registered as a voter within my G/S Division under registration
-            number <u>{details.gramadiv}</u>.</p>
+            number <span className='uderline'>{details.gramadiv}</span>.</p>
 
-            <p>Name of Grama Niladhari: <u>{details.gramaName}</u></p>
-            <p>Grama Niladhari Division: <u>{details.gramadiv}</u></p>
-            <p>Date: <u>{Date.now()}</u><br/></p>
+            <p>Name of Grama Niladhari: <span className='uderline'>{details.gramaName}</span></p>
+            <p>Grama Niladhari Division: <span className='uderline'>{details.gramadiv}</span></p>
+            <p>Date: <span className='uderline'>{Date.now()}</span><br/></p>
            
-                <SignaturePad ref={signCanvas} canvasProps={{className: "sigPad"}}/>
-                <Button onClick={clear}>Clear</Button>
-                <Button onClick={save}>Save</Button>
+            <SignaturePad ref={signCanvas} canvasProps={{className: "sigPad"}}/>
                 {/* <img src={image} alt="signature" style={{width: "150px", height:"100px"}}/> */}
             
-            <p>Signature: …………………………………….</p>
+            <p>Signature: ………………………………………………………</p>
+            <Button onClick={clear}>Clear</Button>
+            {/* <Button onClick={save}>Save</Button> */}
 
         </Paper>
         </div>
         <div >
-            <TextField sx={{marginTop:5}} error={reject} label="Note" fullWidth placeholder='if Rejects, please note the reason'></TextField>
+            <TextField sx={{marginY:5, width: "400px"}} error={reject.status} inputRef={noteRef} label="Note" placeholder='if Rejects, please note the reason'></TextField>
         </div>
         <div>
-            <Button variant='contained' color='primary' onClick={handleApprove} sx={{mx: 1, my:3}}>Approve</Button>
-            <Button variant='contained' color='warning' onClick={handleReject} sx={{mx: 1, my:3}}>Reject</Button>
+        <Button
+            size="small"
+            sx={{ ml: 2, borderRadius: 5 }}
+            color="inherit"
+            onClick={handleClickapprove}
+        >
+            <Typography sx={{ m: 1, textTransform: 'none' }}>Approve</Typography>
+            <CheckCircleIcon sx={{ width: 32, height: 32 }} color='success'/>
+        </Button>
+
+        <Button
+            size="small"
+            sx={{ ml: 2, borderRadius: 5 }}
+            color="inherit"
+            onClick={handleClickreject}
+        >
+            <Typography sx={{ m: 1, textTransform: 'none' }}>Reject</Typography>
+            <CancelIcon sx={{ width: 32, height: 32 }} color='error'/>
+        </Button>
+    
         </div>
-        
+
+        <Snackbar open={open} autoHideDuration={1000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom',horizontal: 'center' }}>
+            {reject.status?
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>Marked As Rejected!</Alert>
+            :
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>Marked As Approved!</Alert>
+            }
+        </Snackbar>
     </Paper>
     );
 };
