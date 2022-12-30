@@ -160,7 +160,7 @@ function MenuBar({group, info}) {
             color="inherit"
           >
             <Typography sx={{ m: 1, textTransform: 'none' }}> {info.displayName}</Typography>
-            <Avatar sx={{ width: 32, height: 32 }} alt={info.username} src="/static/images/avatar/2.jpg" />
+            <Avatar sx={{ width: 32, height: 32 }} alt={info.username} src={info.profile} />
           </Button>
       </Box>
       <Menu
