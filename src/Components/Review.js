@@ -4,6 +4,8 @@ import {Typography, TextField, Button, Box, Paper, Snackbar, IconButton} from '@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
+import {useContext } from 'react';
+import { infoContext } from "./DefaultLayout";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -20,7 +22,8 @@ const Preview = ({request, setReviewed}) => {
     const [occupation, setOccupation] = useState("");
 
     const [open, setOpen] = React.useState(false);
-
+    const info = useContext(infoContext);
+    
     const handleClick = () => {
         setOpen(true);
         setReviewed(true)
@@ -47,6 +50,9 @@ const Preview = ({request, setReviewed}) => {
         </React.Fragment>
     );
 
+    React.useEffect(()=>{
+        console.log("reveiew", info.username)
+    })
 
     return (
         <div>

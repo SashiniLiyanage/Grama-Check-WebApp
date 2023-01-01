@@ -10,9 +10,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { infoContext } from '../Components/DefaultLayout';
+import { useContext } from 'react';
 
 const DataBasePage = props => {
     const [open, setOpen] = React.useState(false);
+    const info = useContext(infoContext)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -21,7 +24,9 @@ const DataBasePage = props => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    React.useEffect(()=>{
+        console.log("database", info.username)
+    })
     return (
         <>
          <Paper sx={{m: 3, p:3}}>

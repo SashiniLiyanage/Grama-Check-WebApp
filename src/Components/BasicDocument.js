@@ -5,6 +5,9 @@ import SignaturePad from 'react-signature-canvas'
 import { Button} from '@mui/material';
 import { useAuthContext } from "@asgardeo/auth-react";
 // import { saveAs } from "file-saver";
+import AllPages from "./AllPages";
+import id from '../Assets/id.pdf'
+import sample from '../Assets/sample.pdf'
 
   const details = {
     "gramaID": "541/A",
@@ -68,7 +71,8 @@ import { useAuthContext } from "@asgardeo/auth-react";
   function BasicDocument() {
     const signCanvas = useRef({})
     const [image, setImage] = useState(null);
-    const {state, getBasicUserInfo} = useAuthContext();
+    const [blob, setBlob] = useState(id);
+    const {state} = useAuthContext();
 
     const clear = () =>{
       signCanvas.current.clear();
@@ -78,16 +82,8 @@ import { useAuthContext } from "@asgardeo/auth-react";
         setImage(signCanvas.current.toDataURL("image/png"))
     }
 
-    // const saveFile = () => {
-    //   // This does the trick!
-    //   pdf(<MyDocument />)
-    //     .toBlob()
-    //     .then((blob) => saveAs(blob, "YourFileName.pdf"));
-    // };
-
-    return (
-      <div style={{display: "flex", flexDirection: "column"}}>
-      <PDFViewer style={styles.viewer}>
+    const MyDocument = ()=>{
+      return(
         <Document>
           {/*render a single page*/}
           <Page size="A4" style={styles.page}>
@@ -129,6 +125,19 @@ import { useAuthContext } from "@asgardeo/auth-react";
             </View>
           </Page>
         </Document>
+      )
+    }
+
+    const saveFile = () => {
+      pdf(<MyDocument />)
+        .toBlob()
+        .then((blob) => setBlob(blob));
+    };
+
+    return (
+      <div style={{display: "flex", flexDirection: "column"}}>
+      <PDFViewer style={styles.viewer}>
+        <MyDocument/>
       </PDFViewer>
       <div style={{marginTop: 20}}>
       <SignaturePad ref={signCanvas} canvasProps={{className: "sigPad"}}/>   
@@ -136,6 +145,7 @@ import { useAuthContext } from "@asgardeo/auth-react";
       <Button onClick={clear}>Clear</Button>
       <Button onClick={save}>Add</Button>
       </div>
+      <Button onClick={saveFile}>Save File</Button>
       </div>
     );
   }
