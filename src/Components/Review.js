@@ -19,10 +19,6 @@ const Preview = ({request, setReviewed}) => {
     const [religion, setReligion] = useState("");
     const [occupation, setOccupation] = useState("");
 
-    useEffect(()=>{
-        console.log(name)
-    },[name])
-
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {

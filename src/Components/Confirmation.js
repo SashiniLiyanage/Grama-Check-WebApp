@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import BasicDocument from './BasicDocument';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -74,8 +75,7 @@ const Confirmation = ({reject, setReject, setConfirmed}) => {
                 >
                 Confirmation
             </Typography>
-        <div className='center'>
-        <Paper sx={{width: 'fit-content', textAlign: 'left', padding: 5, backgroundColor: "#fafafa"}}>
+        {/* <Paper sx={{width: 'fit-content', textAlign: 'left', padding: 5, backgroundColor: "#fafafa"}}>
             
             <div style={{textAlign: 'center'}}><strong>Grama Niladhari Certification for Proprietor/Partner (s)/Director (s)/Wharf Representative (s)</strong></div>
             <br/>
@@ -91,14 +91,15 @@ const Confirmation = ({reject, setReject, setConfirmed}) => {
             <p>Date: <span className='uderline'>{Date.now()}</span><br/></p>
            
             <SignaturePad ref={signCanvas} canvasProps={{className: "sigPad"}}/>
-                {/* <img src={image} alt="signature" style={{width: "150px", height:"100px"}}/> */}
+                {/* <img src={image} alt="signature" style={{width: "150px", height:"100px"}}/>
             
             <p>Signature: ………………………………………………………</p>
             <Button onClick={clear}>Clear</Button>
-            {/* <Button onClick={save}>Save</Button> */}
+            {/* <Button onClick={save}>Save</Button>
 
-        </Paper>
-        </div>
+        </Paper> */}
+        
+            <BasicDocument/>
         <div >
             <TextField sx={{marginY:5, width: "400px"}} error={reject.status} inputRef={noteRef} label="Note" placeholder='if Rejects, please note the reason'></TextField>
         </div>
