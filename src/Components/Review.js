@@ -5,28 +5,35 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
 import {useContext } from 'react';
-import { infoContext } from "./DefaultLayout";
+import {infoContext} from '../App';
+import config from '../config.json';
+import axios from 'axios';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Preview = ({request, setReviewed}) => {
+const Preview = ({request, setReviewed, setData}) => {
 
     const [name, setName] = useState(request.Name)
-    const [address, setAddress] = useState(request.address);
-    const [sex, setSex] = useState(request.sex);
-    const [dob, setDob] = useState("");
+    const [address, setAddress] = useState(request.Address);
+    const [sex, setSex] = useState(request.Sex);
+    const [dob, setDob] = useState(request.DOB);
     const [nationality, setNationality] = useState("");
-    const [religion, setReligion] = useState("");
-    const [occupation, setOccupation] = useState("");
+    const [religion, setReligion] = useState(request.Religion);
+    const [occupation, setOccupation] = useState(request.Occupation);
+    const [fatherName, setFatherName] = useState(request.FatherName);
+    const [fatherAddress, setFatherAddress] = useState(request.FatherName);
+    const [records, setRecords] = useState("Clear");
+    const [loading, setLoading] = useState(true);
 
     const [open, setOpen] = React.useState(false);
     const info = useContext(infoContext);
-    
+
     const handleClick = () => {
         setOpen(true);
-        setReviewed(true)
+        setReviewed(!loading);
+        setData({name,address, NIC: request.NIC, sex,dob,nationality,religion,occupation,fatherName,fatherAddress,records})
     };
 
     const handleClose = (event, reason) => {
@@ -36,6 +43,27 @@ const Preview = ({request, setReviewed}) => {
 
         setOpen(false);
     };
+
+    useEffect(()=>{
+
+        axios.get(`${config.url}/police-records`, {
+            headers: {
+              "API-Key": config.API_Key,
+              "NIC": request.NIC
+            }
+          })
+          .then(function (response) {
+            if(response.data.data.matchFound){
+                setRecords(response.data.msg)
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+
+          setLoading(false)
+          
+    },[])
 
     const action = (
         <React.Fragment>
@@ -49,10 +77,6 @@ const Preview = ({request, setReviewed}) => {
         </IconButton>
         </React.Fragment>
     );
-
-    React.useEffect(()=>{
-        console.log("reveiew", info.username)
-    })
 
     return (
         <div>
@@ -84,15 +108,27 @@ const Preview = ({request, setReviewed}) => {
                         <td colSpan={2}><TextField fullWidth label="Address" defaultValue={request.Address} error={address==""} onChange={(e)=>{setAddress(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
+                        <td colSpan={2}><TextField fullWidth disabled label="National Identity Card" defaultValue={request.NIC} variant="outlined"/></td>
+                    </tr>
+                    <tr>
                         <td><TextField fullWidth label="Sex" defaultValue={request.Sex} error={sex==""} onChange={(e)=>{setSex(e.target.value)}} variant="outlined"/></td>
-                        <td><TextField fullWidth label="DOB" error={dob==""} onChange={(e)=>{setDob(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth label="DOB" defaultValue={request.DOB} error={dob==""} onChange={(e)=>{setDob(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
                         <td><TextField fullWidth label="Nationality" error={nationality==""} onChange={(e)=>{setNationality(e.target.value)}} variant="outlined"/></td>
-                        <td><TextField fullWidth label="Religion" error={religion==""} onChange={(e)=>{setReligion(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth label="Religion" defaultValue={request.Religion} error={religion==""} onChange={(e)=>{setReligion(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Occupation" error={occupation==""} onChange={(e)=>{setOccupation(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Occupation" defaultValue={request.Occupation} error={occupation==""} onChange={(e)=>{setOccupation(e.target.value)}} variant="outlined"/></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}><TextField fullWidth label="Fathers Name" defaultValue={request.FatherName} error={fatherName==""} onChange={(e)=>{setFatherName(e.target.value)}} variant="outlined"/></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}><TextField fullWidth label="Fathers Address" defaultValue={request.FatherAddress} error={fatherAddress==""} onChange={(e)=>{setFatherAddress(e.target.value)}} variant="outlined"/></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}><TextField fullWidth label="Criminal Records" disabled defaultValue={records} variant="outlined"/></td>
                     </tr>
                     <tr>
                         <td colSpan={2}>

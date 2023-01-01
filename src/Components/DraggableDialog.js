@@ -59,7 +59,7 @@ export default function DraggableDialog() {
 
   return (
     <div style={{position: 'relative'}}>
-      <Box sx={{position: 'absolute', top: 0, right: 0}}>
+      <Box sx={{position: 'absolute', top: 45, right: 0}}>
         <Box sx={{display: 'flex', flexDirection:'column'}}>
            
                 <Fab color="warning" aria-label="edit" onClick={handleClickOpenIdentity} sx={{m:1}}>

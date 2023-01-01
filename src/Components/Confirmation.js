@@ -1,7 +1,5 @@
-import React, {useRef, useState} from 'react';
-import SignaturePad from 'react-signature-canvas'
+import React, {useEffect, useRef, useState} from 'react';
 import { Button, TextField, IconButton, Snackbar,Paper, Typography} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -11,9 +9,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const details = {"name":"fullname", "address":"No: 23/A, First Lane, Maharagama", "gramadiv": 1234, "gramaName": "garma name"}
-
-const Confirmation = ({reject, setReject, setConfirmed}) => {
+const Confirmation = ({reject, setReject, setConfirmed, data}) => {
     const signCanvas = useRef({})
     const [image, setImage] = useState(null);
     const [open, setOpen] = useState(false);
@@ -44,26 +40,9 @@ const Confirmation = ({reject, setReject, setConfirmed}) => {
         setOpen(false);
     };
 
-    const action = (
-        <React.Fragment>
-        <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={handleClose}
-        >
-            <CloseIcon fontSize="small" />
-        </IconButton>
-        </React.Fragment>
-    );
-
-    const clear = () =>{
-        signCanvas.current.clear();
-    }
-
-    const save = () =>{
-        setImage(signCanvas.current.getTrimmedCanvas().toDataURL("image/png"))
-    }
+    useEffect(()=>{
+        console.log("data",data)
+    },[])
 
     return (
         <Paper sx={{padding: 2}}>
@@ -75,31 +54,7 @@ const Confirmation = ({reject, setReject, setConfirmed}) => {
                 >
                 Confirmation
             </Typography>
-        {/* <Paper sx={{width: 'fit-content', textAlign: 'left', padding: 5, backgroundColor: "#fafafa"}}>
-            
-            <div style={{textAlign: 'center'}}><strong>Grama Niladhari Certification for Proprietor/Partner (s)/Director (s)/Wharf Representative (s)</strong></div>
-            <br/>
-            <p>Serial No of Registration at G/S office</p>
-            <hr/>
-
-            <p>I certify that Mr/Mrs/Ms (Full Name) <span className='uderline'>{details.name}</span> is residing at (address) <span className='uderline'>{details.address}</span> for <span className='uderline'></span> years.</p>
-            <p>I also certify that he/she is registered as a voter within my G/S Division under registration
-            number <span className='uderline'>{details.gramadiv}</span>.</p>
-
-            <p>Name of Grama Niladhari: <span className='uderline'>{details.gramaName}</span></p>
-            <p>Grama Niladhari Division: <span className='uderline'>{details.gramadiv}</span></p>
-            <p>Date: <span className='uderline'>{Date.now()}</span><br/></p>
-           
-            <SignaturePad ref={signCanvas} canvasProps={{className: "sigPad"}}/>
-                {/* <img src={image} alt="signature" style={{width: "150px", height:"100px"}}/>
-            
-            <p>Signature: ………………………………………………………</p>
-            <Button onClick={clear}>Clear</Button>
-            {/* <Button onClick={save}>Save</Button>
-
-        </Paper> */}
-        
-            <BasicDocument/>
+            <BasicDocument data={data}/>
         <div >
             <TextField sx={{marginY:5, width: "400px"}} error={reject.status} inputRef={noteRef} label="Note" placeholder='if Rejects, please note the reason'></TextField>
         </div>

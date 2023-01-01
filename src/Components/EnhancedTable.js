@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React ,{useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -6,22 +6,13 @@ import { visuallyHidden } from '@mui/utils';
 import {Toolbar,Typography,Paper,Checkbox} from '@mui/material';
 import {Table, TableHead,TableBody,TableCell,TableContainer,TablePagination,TableRow,TableSortLabel} from '@mui/material';
 import FormatLineSpacingSharpIcon from '@mui/icons-material/FormatLineSpacingSharp';
+import {infoContext} from '../App';
+import config from '../config.json'
+import axios from 'axios';
 
-function createData(Date, Name, NIC, Address, Sex) {
-  return {
-    Date,
-    Name,
-    NIC,
-    Address,
-    Sex
-  };
+function createData(BirthCertPicHash,DOB,NIC,NICPicHash,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex){
+  return {BirthCertPicHash,DOB,NIC,NICPicHash,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex};
 }
-
-const rows = [
-  createData('2022-04-05','peter','5678499499V','No 34/A, Second lane, Kandy', 'Male'),
-  createData('2022-05-08','Adam','8488489499V','No 25, First lane, Colombo', 'Male'),
-  createData('2022-04-01','Samantha','8476499499V','No 6, Middle lane, Gampaha', 'Female'),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -54,36 +45,10 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  {
-    id: 'Date',
-    numeric: false,
-    disablePadding: false,
-    label: 'Request Date',
-  },
-  {
-    id: 'Name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Name',
-  },
-  {
-    id: 'NIC',
-    numeric: false,
-    disablePadding: false,
-    label: 'NIC',
-  },
-  {
-    id: 'Address',
-    numeric: false,
-    disablePadding: false,
-    label: 'Address',
-  },
-  {
-    id: 'Sex',
-    numeric: false,
-    disablePadding: false,
-    label: 'Sex',
-  },
+  {id: 'Name',numeric: false,disablePadding: false,label: 'Name'},
+  {id: 'NIC',numeric: false,disablePadding: false,label: 'NIC',},
+  {id: 'Address',numeric: false,disablePadding: false,label: 'Address'},
+  {id: 'Sex',numeric: false,disablePadding: false,label: 'Sex'},
 ];
 
 function EnhancedTableHead(props) {
@@ -179,6 +144,34 @@ export default function EnhancedTable({selected,setSelected}) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = useState([]);
+  const info = useContext(infoContext);
+
+  
+
+  React.useEffect(()=>{
+    console.log(info)
+    axios.get(`${config.url}/all-requests/${info.gramaDiv}`, {
+      headers: {
+        Authorization: `Bearer ${info.access_token}`
+      }
+    })
+    .then(function (response) {
+      var data = []
+      for(var i=0; i<response.data.data.persons.length;i++){
+        var user = response.data.data.persons[i]
+        data.push(createData(user.BirthCertPicHash, user.DOB,user.NIC,user.NICPicHashu,
+          user.Name,user.address,user.fatherAddress,user.fatherName, user.occupation,
+          user.religion,user.sex))
+      }
+      setRows(data)
+      console.log(response.data.data.persons)
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  },[])
+    
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -196,8 +189,8 @@ export default function EnhancedTable({selected,setSelected}) {
     } else if (selectedIndex === 0) {
       newSelected = [{}];
     }
-
     setSelected(newSelected);
+    console.log(selected)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -250,10 +243,9 @@ export default function EnhancedTable({selected,setSelected}) {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.Name}
+                      key={row.NIC}
                       selected={isItemSelected}
                     >
-                      <TableCell align="left">{row.Date}</TableCell>
                       <TableCell align="left">{row.Name}</TableCell>
                       <TableCell align="left">{row.NIC}</TableCell>
                       <TableCell align="left">{row.Address}</TableCell>

@@ -12,6 +12,7 @@ export default function GramaHomePage() {
   const [selected, setSelected] = useState([{}]);
   const [confirmed, setConfirmed] = useState(false);
   const [reviewed, setReviewed] = useState(false);
+  const [data, setData] = useState({});
   const [reject, setReject] = useState({"status":false, "msg":""});
   const history = useHistory()
   
@@ -48,9 +49,9 @@ export default function GramaHomePage() {
       case 1:
         return <EnhancedTable selected={selected} setSelected={setSelected}/>;
       case 2:
-        return <Review request={selected[0]} setReviewed={setReviewed}/>;
+        return <Review request={selected[0]} setReviewed={setReviewed} setData={setData}/>;
       case 3:
-        return <Confirmation setConfirmed={setConfirmed} reject={reject} setReject={setReject} />;
+        return <Confirmation setConfirmed={setConfirmed} reject={reject} setReject={setReject} data={data}/>;
       default:
         return <div>Error: Please reload the page</div>;
     }
