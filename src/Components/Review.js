@@ -40,21 +40,22 @@ const Preview = ({request, setReviewed, setData}) => {
     const [loading, setLoading] = useState(true);
     const [known, setKnown] = useState("");
     const [sinceWhen, setSinceWhen] = useState("");
+    const [msg, setMsg] = useState("")
+    const [severity, setSeverity] = React.useState('success')
 
     const [open, setOpen] = React.useState(false);
     const info = useContext(infoContext);
 
     const handleClick = () => {
+        setMsg("infomation Updated!")
+        setSeverity("success")
         setOpen(true);
         setReviewed(!loading);
-        setData({name,address, NIC: request.NIC, age,sex,dob,nationality,religion,occupation,fatherName,fatherAddress,records})
+        setData({name,address, NIC: request.NIC, age,sex,dob,nationality,religion,
+        occupation,fatherName,fatherAddress,records, known, sinceWhen})
     };
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-        return;
-        }
-
+    const handleClose = () => {
         setOpen(false);
     };
 
@@ -72,7 +73,11 @@ const Preview = ({request, setReviewed, setData}) => {
             }
           })
           .catch(function (error) {
-            console.log(error);
+            setMsg("Couldn't Retrieve the Police Report")
+            setRecords("unknown")
+            setSeverity("error")
+            setOpen(true);
+
           })
 
           setLoading(false)
@@ -94,7 +99,7 @@ const Preview = ({request, setReviewed, setData}) => {
 
     return (
         <div>
-            <DraggableDialog NIC={request.NIC}/>
+            <DraggableDialog NIC={request.NIC} setOpen={setOpen} setSeverity={setSeverity} setMsg={setMsg}/>
             <Paper sx={{paddingY: 2}}>
             <Typography
                 sx={{ flex: '1 1 100%' }}
@@ -104,6 +109,7 @@ const Preview = ({request, setReviewed, setData}) => {
                 >
                 Review Request
             </Typography>
+            <p style={{color: "red"}}>{msg}</p>
 
             <Box sx={{display: 'flex', alignItems:'center', justifyContent:'center'}}>
             <Box
@@ -127,8 +133,8 @@ const Preview = ({request, setReviewed, setData}) => {
 
                     </tr>
                     <tr>
-                        <td><TextField fullWidth label="Age" defaultValue={calcAge(request.DOB)} error={age==""} onChange={(e)=>{setAge(e.target.value)}} variant="outlined"/></td>
-                        <td><TextField fullWidth label="DOB" defaultValue={request.DOB} error={dob==""} onChange={(e)=>{setDob(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth type={'number'} label="Age" defaultValue={calcAge(request.DOB)} error={age==""} onChange={(e)=>{setAge(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth type={'date'} label="DOB" defaultValue={request.DOB} error={dob==""} onChange={(e)=>{setDob(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
                     <td>
@@ -169,9 +175,9 @@ const Preview = ({request, setReviewed, setData}) => {
                 </tbody>
                 </table>
                 
-                <Snackbar open={open} autoHideDuration={1000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom',horizontal: 'center' }}>
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                        Details updated!
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'top',horizontal: 'right' }}>
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {msg}
                     </Alert>
                 </Snackbar>
 

@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
-import {Box,Stepper,Step,StepLabel,Button,Typography} from '@mui/material';
+import React, {useContext, useEffect, useState} from 'react';
+import {Box,Stepper,Step,StepLabel,Button,Snackbar} from '@mui/material';
 import EnhancedTable from '../Components/EnhancedTable';
 import Review from '../Components/Review';
 import Confirmation from '../Components/Confirmation';
 import { useHistory } from 'react-router-dom';
+import { infoContext } from '../Components/DefaultLayout';
+import MuiAlert from '@mui/material/Alert';
+import config from '../config.json';
+import axios from 'axios';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const steps = ['Select Request', 'Review Request', 'Confirm'];
 
@@ -13,12 +21,45 @@ export default function GramaHomePage() {
   const [confirmed, setConfirmed] = useState(false);
   const [reviewed, setReviewed] = useState(false);
   const [data, setData] = useState({});
-  const [reject, setReject] = useState({"status":false, "msg":""});
+  const [pending, setPending] = useState(true);
+  const [tobeSend, setToBeSend] = useState({"accept":false, "rejectReason":""});
+  const [msg, setMsg] = useState("")
+  const [severity, setSeverity] = useState('success');
+  const [open, setOpen] = React.useState(false);
   const history = useHistory()
-  
+  const info = useContext(infoContext)
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setReviewed(false)
+    if(activeStep === steps.length - 1){
+
+      axios.post(`${config.url}/validate`, {
+        NIC: data.NIC,
+        mobileNo: "+94713585988",
+        accept: tobeSend.accept,
+        rejectReason: tobeSend.rejectReason,
+        certificate: tobeSend.certificate,
+        
+      },{
+        headers: {
+          Authorization: `Bearer ${info.access_token}`,
+        }
+      })
+      .then(function (response) {
+        setMsg("Uploaded Successfuly");
+        setOpen(true);
+        setSeverity("success")
+      })
+      .catch(function (error) {
+        setMsg(error.message)
+        setOpen(true);
+        setSeverity("error")
+        console.log(error)
+      }).finally(function () {
+          setPending(false)
+      });
+    }
   };
 
   const handleBack = () => {
@@ -29,6 +70,10 @@ export default function GramaHomePage() {
 
   const handleReset = () => {
     history.push("/")
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const disableNext =(param)=>{
@@ -51,7 +96,7 @@ export default function GramaHomePage() {
       case 2:
         return <Review request={selected[0]} setReviewed={setReviewed} setData={setData}/>;
       case 3:
-        return <Confirmation setConfirmed={setConfirmed} reject={reject} setReject={setReject} data={data}/>;
+        return <Confirmation setConfirmed={setConfirmed} setToBeSend={setToBeSend} data={data}/>;
       default:
         return <div>Error: Please reload the page</div>;
     }
@@ -73,25 +118,15 @@ export default function GramaHomePage() {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          {reject.status?
-          <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1, color:"red"}}>
-            The Gramasewaka Certificate is Rejected!
-          </Typography>
-          <Typography sx={{ mt: 2, mb: 1}}>
-            Reason: {reject.msg} 
-          </Typography>
-          </React.Fragment>
-          :
-          <Typography sx={{ mt: 2, mb: 1, color:"green" }}>
-            The Gramasewaka Certificate is Approved!
-          </Typography>
-          }
           
-          <Box sx={{ pt: 5 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Go Back To Requests</Button>
-          </Box>
+          {pending? <p style={{color: "green"}}>Uploading...</p> :
+              <div>
+                <Box sx={{ pt: 5 }}>
+                  <Box sx={{ flex: '1 1 auto' }} />
+                  <Button onClick={handleReset}>Go Back To Requests</Button>
+                </Box>
+              </div>
+          } 
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -117,6 +152,11 @@ export default function GramaHomePage() {
           </Box>
         </React.Fragment>
       )}
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} anchorOrigin={{ vertical: 'top',horizontal: 'right' }}>
+          <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+              {msg}
+          </Alert>
+      </Snackbar>
     </Box>
   );
 }
