@@ -1,11 +1,17 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle} from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { QuestionAnswer } from '@mui/icons-material';
+import { infoContext } from "../App";
+import axios from 'axios';
+
 
 export default function FormDialog() {
+    const info = React.useContext(infoContext);
+
     const [open, setOpen] = React.useState(false);
+    const [msg, setMsg] = React.useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -13,6 +19,21 @@ export default function FormDialog() {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleSend = (event) => {
+        event.preventDefault();
+
+        const payload = {
+            email: info.email,
+            msg: msg
+        }
+        axios.post("",
+        payload, {
+            headers: {
+              }
+        }).then((res) => console.log(res)).catch((err) => console.log(err));
+
     };
 
     return (
@@ -26,27 +47,34 @@ export default function FormDialog() {
                 Get Help
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Get Help</DialogTitle>
-                <DialogContent sx={{ textAlign: "left"}}>
-                    <DialogContentText sx={{ marginBottom: 1 }}>
-                        Having trouble with Grama Check? Ask for help from our team and we will be happy to help!
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        placeholder="Describe your problem..."
-                        type="email"
-                        fullWidth
-                        variant='outlined'
-                        multiline
-                        rows={5}
-                    />
-                </DialogContent>
-                <DialogActions sx={{ marginBottom: 2, marginRight: 2 }}>
-                    <Button variant='outlined' color='error' onClick={handleClose}>Cancel</Button>
-                    <Button variant='contained' disableElevation color="warning" onClick={handleClose}>Send</Button>
-                </DialogActions>
+                <form autoComplete="off" onSubmit={handleSend}>
+                    <DialogTitle>Get Help</DialogTitle>
+                    <DialogContent sx={{ textAlign: "left" }}>
+                        <DialogContentText sx={{ marginBottom: 1 }}>
+                            Having trouble with Grama Check? Ask for help from our team and we will be happy to help!
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            placeholder="Describe your problem..."
+                            type="email"
+                            fullWidth
+                            variant='outlined'
+                            multiline
+                            rows={5}
+                            required
+                            onChange={(e) => setMsg(e.target.value)}
+                        />
+                    </DialogContent>
+                    <DialogActions sx={{ marginBottom: 2, marginRight: 2 }}>
+                        <Button variant='outlined' color='error' onClick={handleClose} sx={{ mr:1 }}>Cancel</Button>
+                        <Button variant='contained' component="label" disableElevation color="warning">
+                            Send
+                            <input hidden type="submit" />
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </>
     );

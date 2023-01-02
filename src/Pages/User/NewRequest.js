@@ -8,9 +8,33 @@ export default function NewRequest() {
     const [NIC, setNIC] = useState();
     const [birthCert, setBirthCert] = useState();
 
+    function readFileDataAsBase64(e) {
+        const file = e.target.files[0];
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                resolve(event.target.result);
+            };
+
+            reader.onerror = (err) => {
+                reject(err);
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
     const handleNIC = (event) => {
-        if (event.target.files) {
+        if (event.target.files.length !== 0) {
             setNIC(event.target.files[0]);
+
+            readFileDataAsBase64(event)
+                .then((data) => {
+                    console.log("[" + (new Uint8Array(data)).toString() + "]")
+                });
+
         }
     };
 
@@ -25,7 +49,7 @@ export default function NewRequest() {
     }
 
     return (
-        <Card sx={{ m:1}}>
+        <Card sx={{ m: 1 }}>
             <CardContent >
                 <Typography variant="h5">Apply for a Grama Certificate</Typography>
 
