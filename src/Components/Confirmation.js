@@ -152,7 +152,7 @@ const Confirmation = ({setConfirmed, tobeSend, setToBeSend, data}) => {
         .then((blob) => {
             readFileDataAsBase64(blob)
                 .then((data) => {
-                    var arr = [((new Uint8Array(data)).toString()).split(",")]
+                    var arr = ((new Uint8Array(data)).toString()).split(",").map(i=>Number(i));
                     console.log(arr)
                     setToBeSend({"accept":true,"rejectReason": "", "certificate": arr})
                 });

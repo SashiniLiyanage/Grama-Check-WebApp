@@ -33,11 +33,10 @@ export default function GramaHomePage() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setReviewed(false)
     if(activeStep === steps.length - 1){
-      console.log(data.mobileNo)
 
       axios.post(`${config.url}/validate`, {
         NIC: data.NIC,
-        mobileNo: data.mobileNo,
+        mobileNo: "+94713585988",
         accept: tobeSend.accept,
         rejectReason: tobeSend.rejectReason,
         certificate: tobeSend.certificate,
@@ -50,12 +49,13 @@ export default function GramaHomePage() {
       .then(function (response) {
         setMsg("Uploaded Successfuly");
         setOpen(true);
-        severity("success")
+        setSeverity("success")
       })
       .catch(function (error) {
         setMsg(error.message)
         setOpen(true);
-        severity("error")
+        setSeverity("error")
+        console.log(error)
       }).finally(function () {
           setPending(false)
       });
@@ -152,7 +152,7 @@ export default function GramaHomePage() {
           </Box>
         </React.Fragment>
       )}
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom',horizontal: 'center' }}>
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} anchorOrigin={{ vertical: 'top',horizontal: 'right' }}>
           <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
               {msg}
           </Alert>

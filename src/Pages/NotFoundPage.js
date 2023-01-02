@@ -9,9 +9,8 @@ const NotFoundPage = props => {
 
     return (
         <div className='App'>
-            <div className='fullscreen' style={{flexDirection: "column"}}>
-                <img style={{height:"60vh"}} src={NotFound}/>
-                <Button onClick={() => history.goBack()}>Go Back</Button>
+            <div className='fullscreen' style={{flexDirection: "column", background: `url(${NotFound})`, backgroundPosition: 'bottom'}}>
+                <Button sx={{position:'absolute', bottom: "25%"}} variant="containedgit" onClick={() => history.goBack()}>Go Back</Button>
             </div>
         </div>
     );
