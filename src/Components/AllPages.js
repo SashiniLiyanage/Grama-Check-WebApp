@@ -10,9 +10,11 @@ export default function AllPages(props) {
 
   const { pdf } = props;
 
+  const blob = new Blob([new Uint8Array(pdf)], { type: 'application/pdf' });
+
   return (
     <Document
-      file={pdf}
+      file={ blob }
       options={{ workerSrc: "/pdf.worker.js" }}
       onLoadSuccess={onDocumentLoadSuccess}
     >

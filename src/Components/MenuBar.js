@@ -6,7 +6,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useAuthContext } from "@asgardeo/auth-react";
 import { Link } from 'react-router-dom';
 
-function MenuBar({group, info}) {
+function MenuBar({info}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {signOut} = useAuthContext();
@@ -66,7 +66,7 @@ function MenuBar({group, info}) {
             <MenuIcon />
           </IconButton>
           </Box>
-          {group &&
+          {info.hasGroups &&
           <Menu
             anchorEl={anchorElNav}
             id="nav-menu"
@@ -133,7 +133,7 @@ function MenuBar({group, info}) {
           >
             Grama Check
           </Typography>
-          {group &&(
+          {info.hasGroups &&(
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
               <Button
                 // onClick={GoToRequests}

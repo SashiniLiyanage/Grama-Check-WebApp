@@ -34,7 +34,7 @@ function PaperComponent2(props) {
   );
 }
 
-export default function DraggableDialog({NIC}) {
+export default function DraggableDialog({NIC, setOpen, setSeverity, setMsg}) {
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [numPages, setNumPages] = React.useState(null);
@@ -54,14 +54,16 @@ export default function DraggableDialog({NIC}) {
     })
     .then(function (response) {
       if(response.data.data!={}){
-          setNic(response.data.data.nic)
+          setNic(response.data.data["nic"])
+          setbCert(response.data.data["birth-cert"])
       }
     })
     .catch(function (error) {
-      console.log(error);
+      setOpen(true);
+      setMsg(error.message);
+      setSeverity("error")
     })
 
-    console.log(nic)
   },[])
 
   function onDocumentLoadSuccess({ numPages }) {
@@ -86,7 +88,7 @@ export default function DraggableDialog({NIC}) {
 
   return (
     <div style={{position: 'relative'}}>
-      <Box sx={{position: 'absolute', top: 45, right: 20}}>
+      <Box sx={{position: 'absolute', top: 65, right: 20}}>
         <Box sx={{display: 'flex', flexDirection:'column'}}>
            
                 <Fab color="warning" aria-label="edit" onClick={handleClickOpenIdentity} sx={{m:1}}>

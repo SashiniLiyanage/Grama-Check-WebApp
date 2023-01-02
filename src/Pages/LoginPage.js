@@ -39,26 +39,26 @@ const LoginPage = props => {
     return (
     <div className="App">
     <div className='Background'>
-    <Card sx={{ display: 'flex', width: "75%", maxHeight: "90%"}}>
-        <CardMedia
+    <Card sx={{ display: 'flex', width: "50%", backgroundColor: "rgba(255,255,255,0.8)"}}>
+        {/* <CardMedia
             component="img"
             sx={{ width: "40%", display: { xs: 'none', md: 'flex' }}}
             image={image}
-        />
-        <Box sx={{ display: 'flex', flexDirection: 'column',width: { xs: '100%', md: '60%' }}}>
+        /> */}
+        <Box sx={{ display: 'flex', flexDirection: 'column',width: { xs: '100%', md: '100%' }}}>
             <CardContent sx={{ flex: '1 0 auto' }}>
-            <img src={logo} alt="horse" style={{width: "120px"}}/>
+            <img src={logo} alt="horse" style={{width: "120px", margin:20}}/>
             <Typography component="div" variant="h5">
                 Gramasewaka Certificate
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" component="div">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat molestie magna eget sodales. Donec euismod venenatis tincidunt. Nullam id gravida nisi. Vestibulum eget luctus erat. Quisque ex arcu, semper eget ultrices a, faucibus nec est. Quisque aliquet ipsum at arcu sodales interdum. Aliquam sed urna libero. Proin nulla erat, vestibulum at dolor nec, feugiat ullamcorper dui. Donec at urna sapien. Duis cursus, urna in imperdiet tincidunt, odio nulla pretium lacus, et interdum risus magna et magna.
+                Request the certificate from Grama Niladhari of the Residential Division.
             </Typography>
             </CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1, m:5}}>
                 <Root>
                 <Button variant="contained" endIcon={<PersonIcon/>}  onClick={handleSignIn}>
-                    Login
+                    Get Started
                 </Button>
                 </Root>              
             </Box>

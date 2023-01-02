@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { visuallyHidden } from '@mui/utils';
-import {Toolbar,Typography,Paper,Checkbox} from '@mui/material';
+import {Toolbar,Typography,Paper,Checkbox,Snackbar} from '@mui/material';
 import {Table, TableHead,TableBody,TableCell,TableContainer,TablePagination,TableRow,TableSortLabel} from '@mui/material';
 import FormatLineSpacingSharpIcon from '@mui/icons-material/FormatLineSpacingSharp';
 import {infoContext} from './DefaultLayout';
 import config from '../config.json'
 import axios from 'axios';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function createData(DOB,NIC,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex){
   return {DOB,NIC,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex};
@@ -100,7 +105,8 @@ function EnhancedTableToolbar(props) {
   const { selected, dense, handleChangeDense } = props;
 
   return (
-    <Toolbar
+    <React.Fragment>
+      <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
@@ -120,6 +126,7 @@ function EnhancedTableToolbar(props) {
           1 selected
         </Typography>
       ) : (
+        <React.Fragment>
         <Typography
           sx={{ flex: '1 1 100%' }}
           variant="h6"
@@ -128,6 +135,7 @@ function EnhancedTableToolbar(props) {
         >
           Requests
         </Typography>
+        </React.Fragment>
       )}
       <Checkbox
         checked={dense} onChange={handleChangeDense}
@@ -135,6 +143,7 @@ function EnhancedTableToolbar(props) {
         checkedIcon={<FormatLineSpacingSharpIcon/>}
       />
     </Toolbar>
+    </React.Fragment>
   );
 }
 
@@ -145,9 +154,15 @@ export default function EnhancedTable({selected,setSelected}) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = useState([]);
+  const [msg, setMsg] = useState("");
+  const [severity, setSeverity] = React.useState('success');
+  const [open, setOpen] = React.useState(false);
   const info = useContext(infoContext);
 
-  
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   React.useEffect(()=>{
     
@@ -158,16 +173,24 @@ export default function EnhancedTable({selected,setSelected}) {
     })
     .then(function (response) {
       var data = []
+      console.log(response.data.data.persons)
       for(var i=0; i<response.data.data.persons.length;i++){
         var user = response.data.data.persons[i]
         data.push(createData(user.DOB,user.NIC,user.Name,user.address,user.fatherAddress
           ,user.fatherName, user.occupation,user.religion,user.sex))
       }
       setRows(data)
-      console.log(response.data.data.persons)
+      if(response.data.data.persons.length==0) {
+            setOpen(true);
+            setMsg("Please Enter the NIC number")
+            setSeverity("success")
+      }
     })
     .catch(function (error) {
-      console.log(error);
+          setOpen(true);
+          setMsg(error.message)
+          setSeverity("error")
+
     })
   },[])
     
@@ -213,7 +236,7 @@ export default function EnhancedTable({selected,setSelected}) {
   return (
     <Box>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar selected={selected} dense={dense} handleChangeDense={handleChangeDense} />
+        <EnhancedTableToolbar msg={msg} selected={selected} dense={dense} handleChangeDense={handleChangeDense} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -273,6 +296,11 @@ export default function EnhancedTable({selected,setSelected}) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'top',horizontal: 'right' }}>
+          <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+              {msg}
+          </Alert>
+      </Snackbar>
     </Box>
   );
 }
