@@ -22,6 +22,7 @@ export default function DefaultLayout() {
   const {state, getBasicUserInfo, getIDToken} = useAuthContext();
   const [info, setInfo] = useState({});
   const [isLoading, setIsloading] = useState(true);
+  const [hasGroups, setHasGroups] = useState(false)
 
 
   useEffect(() => {
@@ -30,9 +31,9 @@ export default function DefaultLayout() {
         const basicUserInfo = await getBasicUserInfo();
         const idToken =  await getIDToken();
 
-        console.log(basicUserInfo)
         if(basicUserInfo.groups){
             basicUserInfo["hasGroups"]=true
+            setHasGroups(true)
         }
 
         axios.post(`${TOKEN_EXCHANGE_EP}`, qs.stringify({
@@ -49,13 +50,14 @@ export default function DefaultLayout() {
           basicUserInfo["access_token"] = response.data.access_token;
           basicUserInfo["refresh_token"] = response.data.refresh_token;
           setInfo(basicUserInfo)
+          
         })
         .catch(function (error) {
           console.log(error);
-        })
+        }).finally(function () {
+            setIsloading(false)
+        });
         
-        setIsloading(false);
-
     })().catch((e)=>{
       console.log(e)
     })
@@ -67,7 +69,7 @@ export default function DefaultLayout() {
     {isLoading?<Spinner/>:
     <Router>
     <MenuBar info={info}/>
-    {info.hasGroups?
+    {hasGroups?
       <Switch>
         <Route exact path="/requests" component={GramaHomePage}/>
         <Route exact path="/database" component={DataBasePage}/>

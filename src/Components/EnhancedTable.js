@@ -150,6 +150,7 @@ export default function EnhancedTable({selected,setSelected}) {
   
 
   React.useEffect(()=>{
+    
     axios.get(`${config.url}/all-requests/${info.gramaDiv}`, {
       headers: {
         Authorization: `Bearer ${info.access_token}`

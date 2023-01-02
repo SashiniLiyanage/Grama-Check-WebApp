@@ -38,7 +38,6 @@ html * {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
 }
 
 .formTable{
@@ -63,7 +62,6 @@ a {
 }
 
 .lds-spinner {
-  color: official;
   display: inline-block;
   position: relative;
   width: 80px;
@@ -82,7 +80,7 @@ a {
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #fff;
+  background: var(--PrimaryColour);
 }
 .lds-spinner div:nth-child(1) {
   transform: rotate(0deg);

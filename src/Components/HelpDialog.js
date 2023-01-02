@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { QuestionAnswer } from '@mui/icons-material';
-import { infoContext } from "../App";
+import { infoContext } from "./DefaultLayout";
 import axios from 'axios';
 
 
