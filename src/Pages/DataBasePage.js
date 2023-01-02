@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import { infoContext } from '../App';
+import { infoContext } from '../Components/DefaultLayout';
 import { useContext } from 'react';
 
 const DataBasePage = props => {

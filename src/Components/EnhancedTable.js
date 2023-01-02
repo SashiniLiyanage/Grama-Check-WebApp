@@ -6,12 +6,12 @@ import { visuallyHidden } from '@mui/utils';
 import {Toolbar,Typography,Paper,Checkbox} from '@mui/material';
 import {Table, TableHead,TableBody,TableCell,TableContainer,TablePagination,TableRow,TableSortLabel} from '@mui/material';
 import FormatLineSpacingSharpIcon from '@mui/icons-material/FormatLineSpacingSharp';
-import {infoContext} from '../App';
+import {infoContext} from './DefaultLayout';
 import config from '../config.json'
 import axios from 'axios';
 
-function createData(BirthCertPicHash,DOB,NIC,NICPicHash,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex){
-  return {BirthCertPicHash,DOB,NIC,NICPicHash,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex};
+function createData(DOB,NIC,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex){
+  return {DOB,NIC,Name,Address,FatherAddress,FatherName,Occupation,Religion,Sex};
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -150,7 +150,6 @@ export default function EnhancedTable({selected,setSelected}) {
   
 
   React.useEffect(()=>{
-    console.log(info)
     axios.get(`${config.url}/all-requests/${info.gramaDiv}`, {
       headers: {
         Authorization: `Bearer ${info.access_token}`
@@ -160,9 +159,8 @@ export default function EnhancedTable({selected,setSelected}) {
       var data = []
       for(var i=0; i<response.data.data.persons.length;i++){
         var user = response.data.data.persons[i]
-        data.push(createData(user.BirthCertPicHash, user.DOB,user.NIC,user.NICPicHashu,
-          user.Name,user.address,user.fatherAddress,user.fatherName, user.occupation,
-          user.religion,user.sex))
+        data.push(createData(user.DOB,user.NIC,user.Name,user.address,user.fatherAddress
+          ,user.fatherName, user.occupation,user.religion,user.sex))
       }
       setRows(data)
       console.log(response.data.data.persons)
@@ -190,7 +188,6 @@ export default function EnhancedTable({selected,setSelected}) {
       newSelected = [{}];
     }
     setSelected(newSelected);
-    console.log(selected)
   };
 
   const handleChangePage = (event, newPage) => {

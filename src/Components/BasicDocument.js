@@ -1,10 +1,10 @@
 import {pdf,Document,Page,Text,Image,View,StyleSheet,PDFViewer} from "@react-pdf/renderer";
-import React, {useState, useRef, useEffect, useContext} from "react";
+import React, {useState, useRef,useContext} from "react";
 import {format } from 'date-fns'
 import SignaturePad from 'react-signature-canvas'
 import { Button} from '@mui/material';
 import { useAuthContext } from "@asgardeo/auth-react";
-import {infoContext} from '../App';
+import {infoContext} from './DefaultLayout';
 
 // import { saveAs } from "file-saver";
 import id from '../Assets/id.pdf'
@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
       color: "black",
       paddingTop: 30,
       paddingLeft: 10,
-      paddingRight: 10
+      paddingRight: 10,
+      lineHeight: 2
     },
     caption:{
       padding: 20,
@@ -24,7 +25,6 @@ const styles = StyleSheet.create({
     },
     written:{
       color: 'darkblue',
-      lineHeight: 2
     }
     ,
     section: {
@@ -46,6 +46,16 @@ const styles = StyleSheet.create({
       height: 100
     }
   });
+
+  const calcAge = (date)=>{
+    if(!date) return "";
+    var dob = new Date(date); 
+    var month_diff = Date.now() - dob.getTime();  
+    var age_dt = new Date(month_diff);   
+    var year = age_dt.getUTCFullYear();  
+    var age = Math.abs(year - 1970);  
+    return age;
+}
   
   // Create Document Component
   function BasicDocument({data}) {
@@ -64,9 +74,9 @@ const styles = StyleSheet.create({
         setImage(signCanvas.current.toDataURL("image/png"))
     }
 
-    const MyDocument = ()=>{
+    const MyDocument = (props)=>{
       return(
-        <Document>
+        <Document props={props}>
           {/*render a single page*/}
           <Page size="A4" style={styles.page}>
             <View style={styles.caption}>
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
             <View style={styles.hr}></View>
             <View style={styles.section}>
               {/* <Text>District and Divisional Secretary's Division:   <Text style={styles.written}>{info.gramaDiv}</Text></Text> */}
-              <Text>Grama Niladari Division and Number:   <Text style={styles.written}>{data.gramaDiv}</Text></Text>
+              <Text>Grama Niladari Division and Number:   <Text style={styles.written}>{info.gramaDiv}</Text></Text>
               <Text>Whether applicant is personally known to Grama Niladari:   <Text style={styles.written}>Yes</Text></Text>
               <Text>If so, since when?:   <Text style={styles.written}> </Text></Text>
             </View>
@@ -87,7 +97,7 @@ const styles = StyleSheet.create({
               <Text>Name:   <Text style={styles.written}>{data.name}</Text></Text>
               <Text>Address:   <Text style={styles.written}>{data.address}</Text></Text>
               <Text>Sex:   <Text style={styles.written}>{data.sex}</Text></Text>
-              <Text>Age:   <Text style={styles.written}>age</Text></Text>
+              <Text>Age:   <Text style={styles.written}>{calcAge(data.dob)}</Text></Text>
               <Text>Nationality:   <Text style={styles.written}>{data.nationality}</Text></Text>
               <Text>Religion:   <Text style={styles.written}>{data.religion}</Text></Text>
               <Text>Present Occupation:   <Text style={styles.written}>{data.occupation}</Text></Text>
@@ -96,8 +106,7 @@ const styles = StyleSheet.create({
             </View>
             <View style={styles.hr}></View>
             <View style={styles.section}>
-              <Text>Whether the Applicant has been convicted by a Court of Law?:   <Text style={styles.written}>add here</Text></Text>
-              <Text>His/her Character:   <Text style={styles.written}>{data.records}</Text></Text>
+              <Text>Whether the Applicant has been convicted by a Court of Law?:   <Text style={styles.written}>{data.records}</Text></Text>
             </View>
             <View style={styles.hr}></View>
             <View style={styles.section}>

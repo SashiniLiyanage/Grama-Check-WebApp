@@ -10,8 +10,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const Confirmation = ({reject, setReject, setConfirmed, data}) => {
-    const signCanvas = useRef({})
-    const [image, setImage] = useState(null);
     const [open, setOpen] = useState(false);
     const noteRef = useRef()
 
