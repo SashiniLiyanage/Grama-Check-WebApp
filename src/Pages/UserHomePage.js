@@ -11,7 +11,7 @@ import config from '../config.json';
 const UserHome = props => {
     const info = useContext(infoContext);
     
-    const [requested, setRequested] = useState(true);
+    const [requested, setRequested] = useState(false);
 
     useEffect(()=>{
 
