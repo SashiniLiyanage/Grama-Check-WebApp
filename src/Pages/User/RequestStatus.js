@@ -1,86 +1,51 @@
 import { Button, Card, CardContent, Divider, Typography } from "@mui/material"
-import {
-    Timeline,
-    TimelineItem,
-    TimelineConnector,
-    TimelineContent,
-    TimelineDot,
-    TimelineOppositeContent,
-    TimelineSeparator
-} from "@mui/lab";
-import { Fastfood, LaptopMac, Hotel, Repeat, Download, Article, Delete } from "@mui/icons-material";
-import { useState } from "react";
-import { textAlign } from "@mui/system";
+import { Download } from "@mui/icons-material";
+import { useState, useContext, useEffect } from "react";
+import { infoContext } from "../../Components/DefaultLayout";
+import DeleteDialog from "../../Components/DeleteDialog";
+import axios from 'axios';
+import fileDownload from "js-file-download";
+import config from '../../config.json';
+import NewRequestDialog from "../../Components/NewRequestDialog";
 
-export default function RequestStatus() {
-    const [status, setStatus] = useState("Pending");
-    const [NIC, setNIC] = useState();
-    const [gramaName, setGramaName] = useState();
+export default function RequestStatus({ requested, setRequested }) {
+    const info = useContext(infoContext);
+
+    const [status, setStatus] = useState("Accepted");
+    const [rejectReason, setRejectReason] = useState("");
+
+
+    useEffect(() => {
+        axios.get(`${config.url}/request`, {
+            headers: {
+                Authorization: `Bearer ${info.access_token}`,
+                NIC: info.NIC
+            }
+        }).then((res) => {
+            setStatus(res.data.data.status);
+
+            if (res.data.data.status) {
+                setRejectReason(res.data.data.reason);
+            }
+        }).catch((err) => alert(err));
+
+    }, [info.NIC, info.access_token]);
+
+
+    const handleDownload = () => {
+        axios.get(`${config.url}/certificate`, {
+            headers: {
+                Authorization: `Bearer ${info.access_token}`,
+                NIC: info.NIC
+            },
+            responseType: "blob"
+        }).then((res) => fileDownload(res.data, `GramaCertificate-${info.NIC}.pdf`))
+            .catch((err) => alert(err));
+
+    };
 
     return (
         <>
-
-            <Card sx={{ m: 1, width: '35vw' }}>
-                <CardContent>
-                    <Typography variant="h5">Certificate Request Progress</Typography>
-
-                    <Divider light sx={{ m: 1, marginBottom: 5 }} />
-
-                    <div>
-                        <Timeline position="alternate">
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot color="success" />
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>Submit Application</TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot color="success" />
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>Verify Address</TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot color="success" />
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>Confirm Identity</TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot variant="outlined" color="warning" />
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>Validate Documents</TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot variant="outlined" color="secondary" />
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>Perform Police Check</TimelineContent>
-                            </TimelineItem>
-
-
-                            <TimelineItem>
-                                <TimelineSeparator>
-                                    <TimelineDot variant="outlined" />
-                                </TimelineSeparator>
-                                <TimelineContent>Issue Grama Certificate</TimelineContent>
-                            </TimelineItem>
-                        </Timeline>
-                    </div>
-
-                </CardContent>
-            </Card>
-
             <Card sx={{ m: 1, width: '55vw' }}>
                 <CardContent>
                     <Typography variant="h5">Grama Certificate Details</Typography>
@@ -88,48 +53,41 @@ export default function RequestStatus() {
                     <Divider light sx={{ m: 1, marginBottom: 5 }} />
 
                     <div style={{ margin: 30, textAlign: 'left' }}>
-                        <Typography><b>Full Name:</b> </Typography>
-                        <Typography><b>NIC Number:</b></Typography>
-                        <br />
-                        <Typography><b>Grama Division:</b> </Typography>
-                        <Typography><b>Gramasevaka Name:</b> {gramaName}</Typography>
+                        <Typography><b>NIC Number:</b> {info.NIC}</Typography>
                     </div>
 
                     <Divider sx={{ m: 2, ml: 4, mr: 4 }} />
 
                     <div style={{ margin: 30, textAlign: 'left' }}>
-                        <Typography sx={{ marginBottom: 4 }}><b>Certificate Status:</b> Rejected</Typography>
+                        <Typography sx={{ marginBottom: 4 }}><b>Certificate Status:</b> {status}</Typography>
 
-                        <Typography><b>Reason:</b></Typography>
-                        <Typography sx={{ marginBottom: 4 }}>Blah Blah Blah</Typography>
+                        <Typography sx={{ display: (status === "Rejected") ? "inline" : "none" }}><b>Reject Reason:</b></Typography>
+                        <Typography sx={{ marginBottom: 4, display: (status !== "Rejected") ? "none" : "block" }}>{rejectReason}</Typography>
                     </div>
 
-                    <Divider sx={{ m: 1, mt: 10, mb: 5 }} />
+                    <Divider sx={{ m: 1, mt: 8, mb: 5 }} />
 
                     <div>
                         <Button
                             variant="contained"
                             startIcon={<Download />}
                             disableElevation
-                            sx={{ m: 1}}>
+                            sx={{ m: 1, display: (status === "Accepted") ? "inline-block" : "none" }}
+                            onClick={handleDownload}>
                             Download Grama Certificate
                         </Button>
-                        <Button
+                        {/*<Button
                             variant="contained"
                             color="warning"
                             startIcon={<Article />}
                             disableElevation
-                            sx={{ m: 1}}>
+                            sx={{ m: 1, display: (status === "Rejected" || status === "Accepted") ? "inline-block" : "none" }}>
                             Request New Certificate
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="error"
-                            startIcon={<Delete />}
-                            disableElevation
-                            sx={{ m: 1, display: 'none'}}>
-                            Delete Request
-                        </Button>
+    </Button>*/}
+                        <NewRequestDialog display={(status === "Rejected" || status === "Accepted") ? "inline-block" : "none"} setRequested={setRequested} />
+
+                        <DeleteDialog display={(status === "Pending") ? "inline-block" : "none"} setRequested={setRequested} />
+                        
                     </div>
 
                 </CardContent>

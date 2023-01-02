@@ -1,17 +1,30 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { QuestionAnswer } from '@mui/icons-material';
 import { infoContext } from "./DefaultLayout";
 import axios from 'axios';
+import config from '../config.json';
 
 
-export default function FormDialog() {
-    const info = React.useContext(infoContext);
+export default function HelpDialog() {
+    const info = useContext(infoContext);
 
-    const [open, setOpen] = React.useState(false);
-    const [msg, setMsg] = React.useState("");
+    const [open, setOpen] = useState(false);
+    const [msg, setMsg] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const [toastOpen, setToastOpen] = useState(false);
+
+    const handleToastClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setToastOpen(false);
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -28,11 +41,20 @@ export default function FormDialog() {
             email: info.email,
             msg: msg
         }
-        axios.post("",
-        payload, {
+
+        setLoading(true);
+
+        axios.post(`${config.url}/help`,
+            payload, {
             headers: {
-              }
-        }).then((res) => console.log(res)).catch((err) => console.log(err));
+                Authorization: `Bearer ${info.access_token}`,
+            }
+        }).then((res) => {
+            setLoading(false);
+            setToastOpen(true);
+            setOpen(false);
+        })
+        .catch((err) => alert(err));
 
     };
 
@@ -68,14 +90,25 @@ export default function FormDialog() {
                         />
                     </DialogContent>
                     <DialogActions sx={{ marginBottom: 2, marginRight: 2 }}>
-                        <Button variant='outlined' color='error' onClick={handleClose} sx={{ mr:1 }}>Cancel</Button>
-                        <Button variant='contained' component="label" disableElevation color="warning">
+                        <Button variant='outlined' color='error' onClick={handleClose} sx={{ mr: 1 }}>Cancel</Button>
+                        <LoadingButton loading={loading} variant='contained' component="label" disableElevation color="warning">
                             Send
                             <input hidden type="submit" />
-                        </Button>
+                        </LoadingButton>
                     </DialogActions>
                 </form>
             </Dialog>
+
+            <Snackbar
+                open={toastOpen}
+                autoHideDuration={6000}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                onClose={handleToastClose}
+            >
+                <Alert onClose={handleToastClose} severity="success" sx={{ width: '100%' }}>
+                    Help request sent! We will contact you via email to resolve your issue.
+                </Alert>
+            </Snackbar>
         </>
     );
 }
