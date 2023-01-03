@@ -1,7 +1,7 @@
 {
   "name": "grama-check-webapp",
   "version": "0.1.0",
-  "homepage": "./",
+  "homepage": "https://sashiniliyanage.github.io/Grama-Check-WebApp",
   "private": true,
   "dependencies": {
     "@asgardeo/auth-react": "^1.1.18",
@@ -36,6 +36,8 @@
     }
   },
   "scripts": {
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -58,5 +60,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }
