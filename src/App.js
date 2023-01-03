@@ -13,7 +13,7 @@ function App() {
     
     return (
        
-        <Router basename="https:localhost:3000">
+        <Router basename="https://sashiniliyanage.github.io/Grama-Check-WebApp">
             <React.Suspense fallback={Spinner}>
             <Switch>
                 <Route exact path="/login" name="Login Page" component={LoginPage} />
