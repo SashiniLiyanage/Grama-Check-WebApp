@@ -1,6 +1,6 @@
 import React, {useState, useRef,useContext, useEffect} from "react";
 import {pdf,Document,Page,Text,Image,View, StyleSheet ,PDFViewer} from "@react-pdf/renderer";
-import { Button, TextField, IconButton, Snackbar,Paper, Typography} from '@mui/material';
+import { Button, TextField, Snackbar,Paper, Typography} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -139,10 +139,6 @@ const Confirmation = ({setConfirmed, tobeSend, setToBeSend, data}) => {
       )
     }
 
-    const saveFile = () => {
-      
-    };
-
     const handleClickapprove = ()=>{
         setReject(false)
         setConfirmed(true)
@@ -176,10 +172,6 @@ const Confirmation = ({setConfirmed, tobeSend, setToBeSend, data}) => {
     const handleClose = () => {
         setOpen(false);
     };
-
-    useEffect(()=>{
-        console.log("data",data)
-    },[])
 
     return (
         <Paper sx={{padding: 2}}>

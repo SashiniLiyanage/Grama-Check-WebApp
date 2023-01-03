@@ -37,10 +37,8 @@ function PaperComponent2(props) {
 export default function DraggableDialog({NIC, setOpen, setSeverity, setMsg}) {
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const [numPages, setNumPages] = React.useState(null);
   const [nic, setNic] = React.useState(id);
   const [bCert, setbCert] = React.useState(birthcertificate);
-  const [page, setPage] = React.useState(1);
 
   const info = useContext(infoContext);
 
@@ -53,7 +51,7 @@ export default function DraggableDialog({NIC, setOpen, setSeverity, setMsg}) {
       }
     })
     .then(function (response) {
-      if(response.data.data!={}){
+      if(response.data.data!=={}){
           setNic(response.data.data["nic"])
           setbCert(response.data.data["birth-cert"])
       }
@@ -65,10 +63,6 @@ export default function DraggableDialog({NIC, setOpen, setSeverity, setMsg}) {
     })
 
   },[])
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
 
   const handleClickOpenIdentity = () => {
     setOpen1(true);

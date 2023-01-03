@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle} from '@mui/material';
-import {Typography, TextField, Button, Box, Paper, Snackbar, IconButton} from '@mui/material';
+import {Typography, TextField, Button, Box, Paper, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { infoContext } from '../Components/DefaultLayout';
 import { useContext } from 'react';
@@ -49,7 +49,7 @@ const DataBasePage = props => {
     };
 
     const handleClickOpendialog = () => {
-        if(deleteNIC==""){
+        if(deleteNIC===""){
             setOpen(true);
             setMsg("Please Enter the NIC number")
             setSeverity("error")
@@ -63,7 +63,7 @@ const DataBasePage = props => {
     };
 
     const handleAdd = ()=>{
-        if(NIC=="" || name=="" || dob==""){
+        if(NIC==="" || name==="" || dob===""){
             setOpen(true);
             setMsg("Please Fill All The Required Feilds")
             setSeverity("error")
@@ -156,7 +156,7 @@ const DataBasePage = props => {
                         <td colSpan={2}><TextField type={'text'} fullWidth label="Address" onChange={(e)=>{setAddress(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td><TextField fullWidth  type={'text'} required error={NIC==""} label="National Identity Card"  onChange={(e)=>{setNIC(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth  type={'text'} required error={NIC===""} label="National Identity Card"  onChange={(e)=>{setNIC(e.target.value)}} variant="outlined"/></td>
                         <td><TextField fullWidth  type={'text'} label="Nationality" onChange={(e)=>{setNationality(e.target.value)}} variant="outlined"/></td>
 
                     </tr>

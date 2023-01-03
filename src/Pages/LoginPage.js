@@ -4,13 +4,11 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import PersonIcon from '@mui/icons-material/Person';
 import { useHistory } from "react-router-dom";
 
-import image from '../Assets/upanna.jpg';
 import logo from '../Assets/logo.png';
 
 const Root = styled('div')(({ theme }) => ({

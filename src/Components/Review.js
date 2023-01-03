@@ -122,39 +122,39 @@ const Preview = ({request, setReviewed, setData}) => {
                 <table className='formTable'>
                 <tbody>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Name" defaultValue={request.Name} error={name==""} onChange={(e)=>{setName(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Name" defaultValue={request.Name} error={name===""} onChange={(e)=>{setName(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Address" defaultValue={request.Address} error={address==""} onChange={(e)=>{setAddress(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Address" defaultValue={request.Address} error={address===""} onChange={(e)=>{setAddress(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
                         <td><TextField fullWidth disabled label="National Identity Card" defaultValue={request.NIC} variant="outlined"/></td>
-                        <td><TextField fullWidth label="Nationality" defaultValue={request.nationality} error={nationality==""} onChange={(e)=>{setNationality(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth label="Nationality" defaultValue={request.nationality} error={nationality===""} onChange={(e)=>{setNationality(e.target.value)}} variant="outlined"/></td>
 
                     </tr>
                     <tr>
-                        <td><TextField fullWidth type={'number'} label="Age" defaultValue={calcAge(request.DOB)} error={age==""} onChange={(e)=>{setAge(e.target.value)}} variant="outlined"/></td>
-                        <td><TextField fullWidth type={'date'} label="DOB" defaultValue={request.DOB} error={dob==""} onChange={(e)=>{setDob(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth type={'number'} label="Age" defaultValue={calcAge(request.DOB)} error={age===""} onChange={(e)=>{setAge(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth type={'date'} label="DOB" defaultValue={request.DOB} error={dob===""} onChange={(e)=>{setDob(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
                     <td>
-                        <TextField fullWidth label="Sex" defaultValue={request.Sex} error={sex==""} onChange={(e)=>{setSex(e.target.value)}} variant="outlined"/></td>
-                        <td><TextField fullWidth label="Religion" defaultValue={request.Religion} error={religion==""} onChange={(e)=>{setReligion(e.target.value)}} variant="outlined"/></td>
+                        <TextField fullWidth label="Sex" defaultValue={request.Sex} error={sex===""} onChange={(e)=>{setSex(e.target.value)}} variant="outlined"/></td>
+                        <td><TextField fullWidth label="Religion" defaultValue={request.Religion} error={religion===""} onChange={(e)=>{setReligion(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Occupation" defaultValue={request.Occupation} error={occupation==""} onChange={(e)=>{setOccupation(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Occupation" defaultValue={request.Occupation} error={occupation===""} onChange={(e)=>{setOccupation(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Fathers Name" defaultValue={request.FatherName} error={fatherName==""} onChange={(e)=>{setFatherName(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Fathers Name" defaultValue={request.FatherName} error={fatherName===""} onChange={(e)=>{setFatherName(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Fathers Address" defaultValue={request.FatherAddress} error={fatherAddress==""} onChange={(e)=>{setFatherAddress(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Fathers Address" defaultValue={request.FatherAddress} error={fatherAddress===""} onChange={(e)=>{setFatherAddress(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Applicant is known" error={known==""} onChange={(e)=>{setKnown(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Applicant is known" error={known===""} onChange={(e)=>{setKnown(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
-                        <td colSpan={2}><TextField fullWidth label="Since When" error={sinceWhen==""} onChange={(e)=>{setSinceWhen(e.target.value)}} variant="outlined"/></td>
+                        <td colSpan={2}><TextField fullWidth label="Since When" error={sinceWhen===""} onChange={(e)=>{setSinceWhen(e.target.value)}} variant="outlined"/></td>
                     </tr>
                     <tr>
                         <td colSpan={2}><TextField fullWidth label="Criminal Records" disabled defaultValue={records} variant="outlined"/></td>

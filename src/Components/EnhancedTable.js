@@ -180,7 +180,7 @@ export default function EnhancedTable({selected,setSelected}) {
           ,user.fatherName, user.occupation,user.religion,user.sex))
       }
       setRows(data)
-      if(response.data.data.persons.length==0) {
+      if(response.data.data.persons.length===0) {
             setOpen(true);
             setMsg("Please Enter the NIC number")
             setSeverity("success")

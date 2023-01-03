@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, createContext, useState} from "react";
+import React, { useEffect, createContext, useState} from "react";
 import {HashRouter as Router,Switch,Route,Redirect} from "react-router-dom";
 import Spinner from "./Spinner";
 import MenuBar from "./MenuBar";
@@ -12,7 +12,7 @@ import {useAuthContext } from "@asgardeo/auth-react";
 const infoContext = createContext(null);
 
 const TOKEN_EXCHANGE_EP = 'https://sts.choreo.dev/oauth2/token';
-const TOKEN_REVOKE_EP = 'https://sts.choreo.dev/oauth2/revoke';
+// const TOKEN_REVOKE_EP = 'https://sts.choreo.dev/oauth2/revoke';
 const CONSUMER_KEY = '8bLE3SOO5uuGMsfCYFTLnyE3_zca';
 const SUBJECT_TOKEN_TYPE = 'urn:ietf:params:oauth:token-type:jwt';
 const GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:token-exchange';
