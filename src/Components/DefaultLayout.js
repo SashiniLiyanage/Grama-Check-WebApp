@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useState} from "react";
-import {HashRouter as Router,Switch,Route,Redirect} from "react-router-dom";
+import {HashRouter as Router,Switch,Route,Redirect, Link} from "react-router-dom";
 import Spinner from "./Spinner";
 import MenuBar from "./MenuBar";
 import DataBasePage from "../Pages/DataBasePage";
@@ -73,7 +73,7 @@ export default function DefaultLayout() {
       <Switch>
         <Route exact path="/requests" component={GramaHomePage}/>
         <Route exact path="/database" component={DataBasePage}/>
-        <Redirect to="/requests" from="/"/>
+        <Redirect from="/" to="/requests"/>
       </Switch>
       :
       <Switch>

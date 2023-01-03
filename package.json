@@ -1,7 +1,7 @@
 {
   "name": "grama-check-webapp",
   "version": "0.1.0",
-  "homepage": "https://sashiniliyanage.github.io/Grama-Check-WebApp",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@asgardeo/auth-react": "^1.1.18",

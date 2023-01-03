@@ -7,10 +7,10 @@ import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const config = {
-  signInRedirectURL: "https://sashiniliyanage.github.io/Grama-Check-WebApp",
-  signOutRedirectURL: "https://sashiniliyanage.github.io/Grama-Check-WebApp/login",
-  // signInRedirectURL: "https://localhost:3000",
-  // signOutRedirectURL: "https://localhost:3000/login",
+  // signInRedirectURL: "https://sashiniliyanage.github.io/Grama-Check-WebApp",
+  // signOutRedirectURL: "https://sashiniliyanage.github.io/Grama-Check-WebApp/login",
+  signInRedirectURL: "https://localhost:3000",
+  signOutRedirectURL: "https://localhost:3000/login",
   clientID: "BSkuHRd08YqAFxKKmTr_fRh99Tka",
   baseUrl: "https://api.asgardeo.io/t/gramacheckauth",
   scope: ["openid" , "groups", "email", " phone", "profile"],
