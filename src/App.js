@@ -13,7 +13,7 @@ function App() {
     
     return (
        
-        <Router>
+        <Router basename="https:localhost:3000">
             <React.Suspense fallback={Spinner}>
             <Switch>
                 <Route exact path="/login" name="Login Page" component={LoginPage} />
