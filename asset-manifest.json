@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Grama-Check-WebApp/login/static/css/main.d9102b73.css",
-    "main.js": "/Grama-Check-WebApp/login/static/js/main.0fdf8faa.js",
+    "main.js": "/Grama-Check-WebApp/login/static/js/main.12fe298b.js",
     "static/media/404.gif": "/Grama-Check-WebApp/login/static/media/404.d66907c31f319cc0857e.gif",
     "static/media/birthcertificate.pdf": "/Grama-Check-WebApp/login/static/media/birthcertificate.06ec31e832935c33dee7.pdf",
     "static/media/upanna.jpg": "/Grama-Check-WebApp/login/static/media/upanna.59ecb57ca6d1d96289e2.jpg",
@@ -9,10 +9,10 @@
     "static/media/id.pdf": "/Grama-Check-WebApp/login/static/media/id.ffb1f5224e77c73b9926.pdf",
     "index.html": "/Grama-Check-WebApp/login/index.html",
     "main.d9102b73.css.map": "/Grama-Check-WebApp/login/static/css/main.d9102b73.css.map",
-    "main.0fdf8faa.js.map": "/Grama-Check-WebApp/login/static/js/main.0fdf8faa.js.map"
+    "main.12fe298b.js.map": "/Grama-Check-WebApp/login/static/js/main.12fe298b.js.map"
   },
   "entrypoints": [
     "static/css/main.d9102b73.css",
-    "static/js/main.0fdf8faa.js"
+    "static/js/main.12fe298b.js"
   ]
 }
