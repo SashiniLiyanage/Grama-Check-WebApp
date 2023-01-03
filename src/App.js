@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { HashRouter as Router, Route, Switch} from "react-router-dom";
 import { SecureRoute, useAuthContext } from "@asgardeo/auth-react";
 import LoginPage from "./Pages/LoginPage";
 import NotFoundPage from "./Pages/NotFoundPage";

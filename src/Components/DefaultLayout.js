@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useState} from "react";
-import {HashRouter as Router,Switch,Route,Redirect} from "react-router-dom";
+import {BrowserRouter as Router,Switch,Route,Redirect} from "react-router-dom";
 import Spinner from "./Spinner";
 import MenuBar from "./MenuBar";
 import DataBasePage from "../Pages/DataBasePage";
